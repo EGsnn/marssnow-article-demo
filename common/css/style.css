@@ -1,0 +1,114 @@
+@charset "utf-8";
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, Verdana, 'Microsoft YaHei';
+    border: 0;
+    outline: medium;
+    text-shadow: none;
+    text-decoration: none;
+}
+
+body {
+    font-size: .16rem;
+    line-height: 1.5;
+    overflow-x: hidden;
+    position: relative;
+    -webkit-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+input {
+    -o-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    -webkit-appearance: none;
+    vertical-align: middle;
+}
+
+textarea {
+    resize: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+    font-size: .16rem;
+}
+
+hr {
+    border-width: .01rem;
+    border-style: inset;
+}
+
+ul {
+    list-style: none;
+}
+
+p {
+    margin: 0;
+}
+
+a,
+a:link,
+a:active,
+a:visited,
+a:hover {
+    text-decoration: none;
+}
+
+img,
+i {
+    display: block;
+}
+
+i,
+em {
+    font-style: normal;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.rlt {
+    position: relative;
+}
+
+.abs {
+    position: absolute;
+}
+
+body {
+    background-color: #fff;
+}
+
+html,
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.mt_50 {
+    margin-top: .5rem;
+}
+
+img {
+    display: block;
+    vertical-align: middle;
+}

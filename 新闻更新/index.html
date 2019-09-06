@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>新闻更新</title>
+</head>
+<body>
+    <div class="" id="priceMenu">
+        
+    </div>
+</body>
+</html>
+
+<script>
+let arrList = [
+    '这里是第一条新闻',
+    '这里是第二条新闻',
+    '这里是第三条新闻',
+    '这里是第四条新闻',
+    '这里是第五条新闻',
+    '这里是第六条新闻',
+    '这里是第七条新闻',
+]
+
+let len = arrList.length,
+page = 0,
+num = 2;
+
+const Flayweight = function(){
+    const created = []
+    function create (){
+        var dom = document.createElement('div')
+        document.getElementById('priceMenu').appendChild(dom)
+        created.push(dom)
+        return dom;
+    }
+
+    return {
+        getDiv:function(){
+            if(created.length < 2){
+                return create()
+            }else {
+                let div = created.shift()
+                created.push(div)
+                return div
+            }
+        }
+    }
+}();
+
+for(var i=0; i<2;i++){
+    if(arrList[i]){
+        Flayweight.getDiv().innerHTML = arrList[i]
+    }
+}
+
+
+setInterval(()=>{
+
+    if(arrList.length < 2){
+        return
+    }
+    let n = ++page * num % len
+    for(let j = 0; j < 2; j++ ){
+        if(arrList[n + j]) {
+            Flayweight.getDiv().innerHTML = arrList[n + j]
+        }else if(arrList[n + j - len]){
+            Flayweight.getDiv().innerHTML = arrList[n + j - len]
+        }else {
+            Flayweight.getDiv().innerHTML = ''
+        }
+    }
+},2000)
+
+
+
+</script>
