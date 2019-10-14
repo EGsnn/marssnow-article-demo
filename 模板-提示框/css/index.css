@@ -6,13 +6,14 @@
 .ms-layer {
     width: 100%;
     height: 100%;
+    /* height: auto; */
     position: fixed;
     display: none;
     top: 0;
-    background: rgba(0, 0, 0, 0.6)
+    /* background: rgba(0, 0, 0, 0.6) */
 }
 .ms-alert {
-    width: 200px;
+    width: 300px;
     height: auto;
     font-size: 14px;
     /* text-align: center; */
@@ -26,6 +27,7 @@
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
     box-sizing: border-box;
+    border: #ddd solid 3px;
 }
 .ms-alert .ms-closeBtn {
     display: block;
@@ -48,14 +50,72 @@
     margin-bottom: 8px;
 
 }
-.ms-alert .ms-confirBtn-right {
+.ms-alert .ms-confirBtn-right ,
+.ms-alert .ms-confirBtn-input {
     display: block;
     float: right;
     border: 1px #ddd solid;
-    padding: 1px 8px;
+    padding: 1px 12px;
     border-radius: 3px;
     margin-right: 10px;
     background-color: #40a9ff;
     border-color: #40a9ff;
     color: #fff;
+    height: 32px;
+    line-height: 32px;
+    cursor: pointer;
+}
+
+.ms-alert .ms-confirBtn-weichart{
+    display: block;
+    float: right;
+    border: 1px #ddd solid;
+    padding: 1px 12px;
+    border-radius: 3px;
+    margin-right: 10px;
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+    color: #fff;
+    height: 32px;
+    line-height: 32px;
+    cursor: pointer;
+}
+
+
+/* .ms-alert  input */
+.ms-alert .input-box {
+
+}
+.ms-alert .input-box li {
+    margin-bottom: 7px;
+    display: flex;
+}
+.ms-alert .input-box li input {
+    flex: 5;
+    background: #f2f2f2;
+    height: 40px;
+    padding: 0 8px;
+    box-sizing: border-box;
+}
+.ms-alert .input-box li .replace-text {
+    display: inline-block;
+    padding: 0 8px;
+    flex: 5;
+    background: #f2f2f2;
+    height: 80px;
+    box-sizing: border-box;
+    line-height: 30px;
+}
+.ms-alert .input-box li a {
+    flex: 2;
+    height: 40px;
+    background: #40a9ff;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    border-radius: 5px;
+    margin-left: 9px;
+}
+.search-value-style {
+    background: #40a9ff66;
 }
