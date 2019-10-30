@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../common/css/style.css">
+    <title>观察者模式</title>
+    <script src="../common/js/jquery.js"></script>
+    <script src="../common/js/rem.js"></script>
+    <style>
+        html,body{width: 100%;height: 100%;overflow: hidden;;}
+        body {
+            font-size: .3rem;
+            color: #555;
+            margin: 0 auto;
+            max-width: 7.5rem;
+        }
+        .video-box {
+            width: 7.5rem;
+            height: 4.18rem;
+            background: #cccccc98;
+        }
+        .chart-list-box {
+            /* margin-top: .3rem; */
+            height: 100vh;
+            margin-top: -4.18rem;
+            padding-top: 4.48rem;
+            box-sizing: border-box;
+        }
+        .chart-list-box .content {
+            background: #f2f2f2;
+            height: 100%;
+            padding-top: .3rem;
+            box-sizing: border-box;
+        }
+        .title-box {
+            height: .5rem;
+            line-height: .5rem;
+        }
+        .chart-list-box .content .msg-box {
+            height: 100%;
+            padding-top: .7rem;
+            margin-top: -.5rem;
+            padding-bottom: 1rem;
+            box-sizing: border-box;
+        }
+        .chart-list-box .content .msg-box ul {
+            height: 100%;
+            background: #fff;
+            width: 7.3rem;
+            margin: 0 auto;
+            border-radius: .2rem;
+            padding: .3rem .15rem;
+            box-sizing: border-box;
+        }
+        .chart-list-box .content .input-box {
+            height: .8rem;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+        .chart-list-box .content .input-box * {
+            height: .8rem;
+            display: inline-block;
+            line-height: .8rem;
+            font-size: .3rem
+        }
+        .chart-list-box .content .input-box input {
+            width: 70%;
+            box-sizing: border-box;
+            padding-left: .3rem;
+        }
+        .chart-list-box .content .input-box a {
+            width: 28%;
+            border: none;
+            text-align: center;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-box"></div>
+    <div class="chart-list-box">
+        <div class="content">
+            <div class="title-box">在线人数：<span>1123</span>消息：<span class="msg-num">0</span></div>
+            <div class="msg-box"><ul id="msg-ul"></ul></div>
+            <div class="input-box">
+                <input class="user-input" type="text" placeholder="输入">
+                <a class="submit-btn" href="javascript:;">发送</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        const Obsever = (function(){
+            let _message = {}
+            return {
+                // 注册|订阅 创建一个栏目的集群
+                regist:function(type,fn){
+                    // 如果该栏目不存在则创建一个该栏目类型
+                    if(typeof _message[type] === 'undefined'){
+                        _message[type] = [fn] 
+                    // 如果存在
+                    } else {
+                        // 则将该方法推入该栏目序列中
+                        _message[type].push(fn)
+                    }
+                },
+                // 发布
+                fire:function(type, args){
+                    // 如果该栏目不存在，则返回
+                    if(!_message[type]){
+                        return
+                    }
+                    // 定义栏目信息
+                    let events = {
+                        type: type,
+                        args: args || {}
+                    }
+                    let len = _message[type].length
+                    // 遍历栏目序列
+                    for(let i=0; i<len; i++){
+                        // 依次执行注册的栏目序列方法
+                        _message[type][i].call(this,events)
+                    }
+                },
+                // 取消订阅
+                remove:function(type,fn){
+                    if(typeof _message[type] instanceof Array){
+                        // 从最新的消息开始遍历
+                        let len = _message[type].length - 1
+                        for(;i>=0; i--){
+                            // 如果栏目中存在该函数  则移除该函数
+                            _message[type][i] === fn && _message[type][i].splice(i, 1)
+                        }
+                    }
+                },
+            }
+        })()
+        Obsever.regist('test',function(e){
+            console.log(1111, e.type, e.args.msg)
+        });
+        // Obsever.fire('test',{msg:'传递参数'});
+        // Obsever.fire('test',{msg:'传递参数22'});
+
+
+        // 聊天功能模块
+        (function(){
+            let ul = $('#msg-ul')
+            
+            function addMsgItem (e){
+
+
+                let date =  e.args.date 
+                let hhmm = date.getHours() + '点' + date.getMinutes() + '分'+ date.getSeconds() + '秒'
+                let text = e.args.text + '---'+ hhmm;
+                let dataId =  e.args.dataId 
+
+
+                let li = document.createElement('li')
+                let span = document.createElement('span')
+                li.setAttribute('data-id', dataId)
+                li.innerHTML = text
+                span.innerHTML = 'delete'
+                span.onclick = function(){
+                    Obsever.fire('removeCommentMessage',{num:-1, dataId})
+                }
+                li.appendChild(span)
+                ul.append(li)
+            }
+
+
+            function removeMsgItem(e){
+                let dataId = e.args.dataId
+                ul.children(`li[data-id=${dataId}]`).remove()
+            } 
+            Obsever.regist('addCommentMessage',addMsgItem)
+            Obsever.regist('removeCommentMessage',removeMsgItem)
+
+        })();
+
+
+
+
+        // 弹幕模块
+        (function(){
+            let div = $('.video-box')
+            function addMsgItem (e){
+                let text = e.args.text;
+                let dataId =  e.args.dataId 
+
+                let p = document.createElement('p')
+                let span = document.createElement('span')
+                p.setAttribute('data-id', dataId)
+
+                p.innerHTML = text
+                span.onclick = function(){
+                    Obsever.fire('removeCommentMessage',{num:-1})
+                }
+                p.appendChild(span)
+                div.append(p)
+            }
+            function removeMsgItem(e){
+                let dataId = e.args.dataId
+                div.children(`p[data-id=${dataId}]`).remove()
+            } 
+            Obsever.regist('addCommentMessage',addMsgItem)
+            Obsever.regist('removeCommentMessage',removeMsgItem)
+        })();
+
+
+
+        
+        // 消息数量
+        (function(){
+            function changeMsgNum(e){
+                let num =  e.args.num 
+                let msgNum =  $('.msg-num').text() -0
+                $('.msg-num').text(msgNum + num)
+            }
+            Obsever.regist('addCommentMessage',changeMsgNum)
+            Obsever.regist('removeCommentMessage',changeMsgNum)
+        })();
+
+
+
+
+        // 用户发送消息功能
+        (function(){
+            $('.submit-btn').click(function(){
+                let text = $('.user-input')
+                if(text.val() === ''){return}
+                let date = new Date()
+                let dataId = date.getTime()
+
+                Obsever.fire('addCommentMessage',{text: text.val(), date, dataId, num:1})
+                text.val('')
+            })
+        })()
+
+
+    </script>
+</body>
+</html>

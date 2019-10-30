@@ -16,8 +16,6 @@ body {
 }
 
 body {
-    font-size: .16rem;
-    line-height: 1.5;
     overflow-x: hidden;
     position: relative;
     -webkit-text-size-adjust: none;
@@ -44,7 +42,6 @@ h4,
 h5,
 h6 {
     font-weight: normal;
-    font-size: .16rem;
 }
 
 hr {
@@ -94,21 +91,3 @@ em {
     position: absolute;
 }
 
-body {
-    background-color: #fff;
-}
-
-html,
-body {
-    width: 100%;
-    overflow-x: hidden;
-}
-
-.mt_50 {
-    margin-top: .5rem;
-}
-
-img {
-    display: block;
-    vertical-align: middle;
-}

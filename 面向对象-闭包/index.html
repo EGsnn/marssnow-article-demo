@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>面向对象-闭包</title>
+</head>
+<body>
+    <a href="#" target="_blank">131231212312</a>
+</body>
+</html>
+
+<script>
+
+    // var Book = (function(){
+    //     var bookNum = 0;
+    //     function checkBook (name){}
+    //     return function(newId, newName, newPrice){
+    //         var name, price;
+    //         function checkID(){}
+
+    //     }
+    // })()
+    function checkPack() {
+        let pageId = window.location.pathname.split('/')[3]
+        let sessionKey = 'packStroge'+pageId
+        var packStroge = window.sessionStorage.getItem(sessionKey) 
+        
+        
+        if (packStroge == 1) {
+            alert('reload-page')
+            return false
+        } else {
+            alert('first-open')
+            window.sessionStorage.setItem(sessionKey, 1)
+            return true
+        }
+    };
+
+    if(checkPack() ){
+        alert(111)
+    }
+</script>
